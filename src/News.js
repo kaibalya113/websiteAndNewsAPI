@@ -1,66 +1,47 @@
 import React, { Component } from "react";
 import "./news.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default class News extends Component {
-  
-    
-    constructor(){
-        super();
-        this.state={
-            
-        }
+  constructor(props) {
+    super(props);
+    this.state = {
+      id:  101,
+      names: [],
+      refresh: []
+    };
+  }
 
-        // grab the news container
-        let newFiles = document.getElementById("news");
-        
-        // create a get request
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=e1fb37087786407b952b40b5796d00d9', true)
-        
-        xhr.onload = () =>{
-            if(this.status == 200){
-                let json = JSON.parse(this.responceText);
-                console.log(json);
-            }else{
+  display = (id) => {
+    let text = "";
+    this.setState({ names: "Refreshing... your name" });
+    for (let i = 1; i < 10; i++) {
+      setTimeout(() => {
+        this.setState({ names: "krishna" });
 
-            }
-        }
-        xhr.send();
-        let n =`<div className="card">
-        <div className="card-header" id="headingOne">
-          <h5 className="mb-0">
-            <button className="btn btn-link"
-              data-toggle="collapse"
-              data-target="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne"
-            >
-              Collapsible Group Item #1
-            </button>
-          </h5>
-        </div>
+        text += `${this.state.names}<br>`;
 
-        <div id="collapseOne" className="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-          <div className="card-body">
-            
-          </div>
-        </div>
-      </div>`;
+        document.getElementById("list").innerHTML = text;
+      }, 3000);
+
     }
-  
-    render() {
+    console.log(`${this.state.names} is having id: ${this.state.id}`)
+  };
+  displayWithId = () => {
+    this.display(this.state.id);
+  } 
+  render() {
     return (
       <div className="news">
         <h1>
           News: <span className="badge badge-secondary">by BBC</span>
         </h1>
-        <br></br>
-        <div id="news">
-          
-          
-         
-        </div>
+        <button id="btn" onClick={this.displayWithId}>
+          Refresh
+        </button>
+
+        <h1>{this.state.names}</h1>
+        <p id="list"></p>
       </div>
     );
   }
