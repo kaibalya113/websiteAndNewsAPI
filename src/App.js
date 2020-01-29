@@ -9,7 +9,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import './home.css';
 
-
+if('serviceWorker' in navigator){
+  navigator.serviceWorker
+    .register('./sw.js')
+    .then(function() {
+      console.log('service worker is running...')
+    });
+}
 class App extends Component{
   
   render(){
@@ -27,6 +33,7 @@ class App extends Component{
       
     );
   }
+  
   
 }
 class Home extends Component{
